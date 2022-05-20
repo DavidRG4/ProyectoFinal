@@ -2,7 +2,9 @@ let READY_STATE_COMPLETE = 4;
 let HTTP_STATUS_OK = 200;
 
 window.onload = () => {
-  showAllContainers();
+  document.getElementById("navBarSearcher").style.visibility="hidden";
+  document.getElementById("creatorButtons").style.visibility="hidden";
+  document.getElementById("startSession").addEventListener("click", login);
   document
     .getElementById("AllContainers")
     .addEventListener("click", showAllContainers);
@@ -15,7 +17,19 @@ window.onload = () => {
     .addEventListener("click", inspecContainer);
 };
 //Login
-
+function login() {
+  let user = document.getElementById("usernameLogin").value;
+  let password = document.getElementById("passwordLogin").value;
+  
+  if (user ===password) {
+    
+    console.log("todo bien")
+    showAllContainers();
+    document.getElementById("formLogin").style.display = "none";
+    document.getElementById("navBarSearcher").style.visibility="visible";
+    document.getElementById("creatorButtons").style.visibility="visible";
+  }
+}
 
 //General
 function showAllContainers() {
@@ -159,7 +173,7 @@ function procesar_imagenes(imagenes) {
     eliminate.setAttribute("id", imagen.Id);
     spanEliminate.appendChild(eliminate);
     spanEliminate.setAttribute("class", "eliminate");
-    td.appendChild(spanEliminate)
+    td.appendChild(spanEliminate);
     tr.appendChild(td);
     tbody.appendChild(tr);
   }
@@ -217,7 +231,7 @@ function procesar_imagen(imagen) {
   eliminate.setAttribute("id", imagen.Id);
   spanEliminate.appendChild(eliminate);
   spanEliminate.setAttribute("class", "eliminate");
-  td.appendChild(spanEliminate)
+  td.appendChild(spanEliminate);
   tr.appendChild(td);
   table.appendChild(thead);
   tbody.appendChild(tr);
@@ -359,7 +373,7 @@ function startContainer(id) {
   url = "http://127.0.0.1:2327/containers/" + id + "/start";
   xhr.open("Post", url);
   xhr.send();
-  
+
   showAllContainers();
 }
 
@@ -378,7 +392,6 @@ function stopContainer(id) {
   xhr.open("Post", url);
   xhr.send();
   showAllContainers();
-
 }
 
 //Crear Contenedor
