@@ -2,7 +2,7 @@ let READY_STATE_COMPLETE = 4;
 let HTTP_STATUS_OK = 200;
 import { interact } from "./interacciones";
 
-function showAllImages() {
+export function showAllImages() {
   let xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
     if (
@@ -76,7 +76,7 @@ function procesar_imagenes(imagenes) {
 }
 
 //Especificos
-function InspectImagen() {
+export function InspectImagen() {
   let xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
     if (

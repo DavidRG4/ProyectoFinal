@@ -1,7 +1,6 @@
-
-import {login} from "./login"
-import {showAllContainers,inspecContainer,createForm } from "./containers"
-import {showAllImages,InspectImagen} from "./imagenes"
+import {login} from "/js/login.js"
+import {showAllContainers,inspecContainer,createForm } from "/js/containers.js"
+import {showAllImages,InspectImagen} from "/js/imagenes.js"
 
 
 window.onload = () => {

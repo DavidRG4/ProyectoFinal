@@ -1,5 +1,4 @@
 //Interacciones
-
 import { showAllContainers } from "./containers";
 import { showAllImages } from "./imagenes";
 let READY_STATE_COMPLETE = 4;
