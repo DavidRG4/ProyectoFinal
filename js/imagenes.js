@@ -144,3 +144,35 @@ function procesar_imagen(imagen) {
   table.appendChild(tbody);
   document.getElementById("result").appendChild(table);
 }
+
+//Crear imagenes
+export function createFormImagen(){
+  document.getElementById("creatorImagen").style.display="inline-block	";
+}
+export function createImagen(){
+
+}
+//interact
+export function interact(action) {
+  id = action.target.id;
+  interactType = action.currentTarget.className;
+  console.log(interactType);
+  if (interactType === "eliminateImagen") {
+    startContainer(id);
+  }
+}
+//borrar imagen
+function deleteImagen(id) {
+  let xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (
+      xhr.readyState === READY_STATE_COMPLETE &&
+      xhr.status === HTTP_STATUS_OK
+    ) {
+    }
+  };
+  url = "http://127.0.0.1:2327/images/" + id;
+  xhr.open("Delete", url);
+  xhr.send();
+  showAllImages();
+}

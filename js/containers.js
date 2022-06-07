@@ -207,7 +207,71 @@ export function inspecContainer() {
 }
 
 //Crear Contenedor
-export function createForm() {
-  creator = document.getElementById("creator");
-  form = document.createElement("form");
+export function createFormContainer() {
+  document.getElementById("creatorContainer").style.display="inline-block	";
+}
+export function createContainer(){
+
+}
+//
+function interact(action) {
+  id = action.target.id;
+  interactType = action.currentTarget.className;
+  console.log(interactType);
+  if (interactType === "start") {
+    startContainer(id);
+  } else if (interactType === "stop") {
+    stopContainer(id);
+  } else if (interactType === "eliminateContainer") {
+    deleteContainer(id);
+  }
+}
+//Eliminar containers
+function deleteContainer(id) {
+  let xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (
+      xhr.readyState === READY_STATE_COMPLETE &&
+      xhr.status === HTTP_STATUS_OK
+    ) {
+    }
+  };
+  url = "http://127.0.0.1:2327/containers/" + id;
+  xhr.open("Delete", url);
+  xhr.send();
+  showAllContainers();
+}
+
+//Iniciar Containers
+function startContainer(id) {
+  let xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (
+      xhr.readyState === READY_STATE_COMPLETE &&
+      xhr.status === HTTP_STATUS_OK
+    ) {
+    }
+  };
+  url = "http://127.0.0.1:2327/containers/" + id + "/start";
+  xhr.open("Post", url);
+  xhr.send();
+
+  showAllContainers();
+}
+
+//Parar
+function stopContainer(id) {
+  let xhr = new XMLHttpRequest();
+
+  xhr.onreadystatechange = function () {
+    if (
+      xhr.readyState === READY_STATE_COMPLETE &&
+      xhr.status === HTTP_STATUS_OK
+    ) {
+    }
+  };
+  url = "http://127.0.0.1:2327/containers/" + id + "/stop";
+  xhr.open("Post", url);
+  xhr.send();
+  showAllContainers();
 }
