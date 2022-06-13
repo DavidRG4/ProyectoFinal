@@ -1,3 +1,5 @@
+import {InspectSelectFormImagen} from "./imagenes.js"
+
 let READY_STATE_COMPLETE = 4;
 let HTTP_STATUS_OK = 200;
 
@@ -13,10 +15,13 @@ export function showAllContainers() {
     }
   };
   xhr.open("GET", "http://172.17.0.1:2327/containers/json?all=true");
+ 
   xhr.send();
 }
 function procesar_container(containers) {
   document.getElementById("result").innerHTML = "";
+  document.getElementById("creatorContainer").style.display = "none";
+  document.getElementById("creatorImagen").style.display = "none";
   let table = document.createElement("table");
   table.setAttribute("class", "table table-striped table-hover");
   let tbody = document.createElement("tbody");
@@ -120,10 +125,13 @@ export function inspecContainer() {
   let nameOrId = document.getElementById("searcherContainer").value;
   let url = "http://172.17.0.1:2327/containers/" + nameOrId + "/json";
   xhr.open("GET", url);
+ 
   xhr.send();
 }
 function procesar_contenedor(container) {
   document.getElementById("result").innerHTML = "";
+  document.getElementById("creatorContainer").style.display = "none";
+  document.getElementById("creatorImagen").style.display = "none";
   let table = document.createElement("table");
   table.setAttribute("class", "table table-stripped table-hover");
   let tbody = document.createElement("tbody");
@@ -220,7 +228,10 @@ function procesar_contenedor(container) {
 
 //Crear Contenedor
 export function createFormContainer() {
+  InspectSelectFormImagen();
   document.getElementById("creatorContainer").style.display = "inherit";
+  document.getElementById("creatorImagen").style.display = "none";
+
 }
 export function createContainer() {}
 //
@@ -250,6 +261,7 @@ function deleteContainer(id) {
   };
   let url = "http://127.0.0.1:2327/containers/" + id;
   xhr.open("Delete", url);
+ 
   xhr.send();
   showAllContainers();
 }
@@ -266,8 +278,8 @@ function startContainer(id) {
   };
   let url = "http://127.0.0.1:2327/containers/" + id + "/start";
   xhr.open("Post", url);
+ 
   xhr.send();
-
   showAllContainers();
 }
 
@@ -284,6 +296,7 @@ function stopContainer(id) {
   };
   let url = "http://127.0.0.1:2327/containers/" + id + "/stop";
   xhr.open("Post", url);
+ 
   xhr.send();
   showAllContainers();
 }

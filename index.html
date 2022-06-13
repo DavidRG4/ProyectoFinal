@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
     <script src="https://kit.fontawesome.com/468a3c9ae8.js" crossorigin="anonymous"></script>
-    <script defer src="js/containers.js" type="module"></script>
     <script defer src="js/imagenes.js" type="module"></script>
+    <script defer src="js/containers.js" type="module"></script>
     <script defer src="js/login.js" type="module"></script>
     <script defer src="js/main.js" type="module"></script>
-    <script defer src="js/interactTelefono.js" type="module"></script>
+    <scrip defer src="js/interactTelefono.js" type="module"></script>
     <link rel="stylesheet" href="css/main.css" />
 
     <title>ProyectoFinal</title>
@@ -104,12 +104,16 @@
                         placeholder="Introduzca">
                 </div>
                 <div class="form-group m-2">
-                    <label for="puertoContainer">Puerto</label>
-                    <input type="text" class="form-control" id="inputPuertoContainer" placeholder="Puerto">
+                    <label for="puertoContainer">Puertos</label>
+                    <input type="text" class="form-control" id="inputPuertoContainer" placeholder="port_1/(tcp|udp|sctp),port_2/(tcp|udp|sctp)">
                 </div>
                 <div class="form-group m-2">
                     <label for="ImagenContainer">Imagen</label>
-                    <input type="text" class="form-control" id="inputImagenContainer" placeholder="Imagen">
+                    <select class="form-control" id="inputImagenContainer"></select>
+                </div>
+                <div class="form-group m-2">
+                    <label for="puertoContainer">ENV</label>
+                    <input type="text" class="form-control" id="inputPuertoContainer" placeholder="VAR1=value1,VAR2=value2, ...">
                 </div>
             </form>
             <button id="confirmCreateContainer" class="btn btn-primary col-3 m-3">Crear Contenedor</button>
@@ -121,21 +125,26 @@
                     <label for="imagenName">Nombre Imagen</label>
                     <input type="text" class="form-control" id="inputImagenName" placeholder="Introduzca Imagen">
                 </div>
+                <div class="form-group m-2">
+                    <label for="imagenName">Tag</label>
+                    <input type="text" class="form-control" id="inputImagenTag" placeholder="Version">
+                </div>
             </form>
             <button id="confirmCreateImagen" class="btn btn-primary col-3 m-3">Crear Imagen</button>
 
-        </div>
-        <div class="container">
-            <div class="table-responsive mt-3" id="result"></div>
         </div>
         <div id="creatorButtons" class="d-flex justify-content-center mt-3">
             <button class="btn btn-primary btn-md mx-2" id="addImagen"> Añadir nueva Imagen </button>
             <button class="btn btn-primary btn-md mx-2" id="addContainer"> Añadir nuevo Container </button>
         </div>
+        <div class="container">
+            <div class="table-responsive mt-3" id="result"></div>
+        </div>
+  
     </main>
-    <footer class="bg-primary mt-5 mx-2 d-flex justify-content-center text-white" id="footerDesign">
+  <!--  <footer class="bg-primary mt-5 mx-2 d-flex justify-content-center text-white" id="footerDesign">
         <p class="figure align-self-center m-2">hola</p>
-    </footer>
+    </footer> -->
 </body>
 
 </html>

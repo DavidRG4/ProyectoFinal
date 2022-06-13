@@ -3,6 +3,7 @@ let HTTP_STATUS_OK = 200;
 
 export function showAllImages() {
   let xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
   xhr.onreadystatechange = function () {
     if (
       xhr.readyState === READY_STATE_COMPLETE &&
@@ -13,10 +14,13 @@ export function showAllImages() {
     }
   };
   xhr.open("GET", "http://127.0.0.1:2327/images/json");
+
   xhr.send();
 }
 function procesar_imagenes(imagenes) {
   document.getElementById("result").innerHTML = "";
+  document.getElementById("creatorContainer").style.display = "none";
+  document.getElementById("creatorImagen").style.display = "none";
   let table = document.createElement("table");
   table.setAttribute("class", "table table-striped table-hover");
   let tbody = document.createElement("tbody");
@@ -37,6 +41,7 @@ function procesar_imagenes(imagenes) {
   let reload = document.createElement("i");
   reload.setAttribute("class", "fa-solid fa-rotate");
   spanReload.setAttribute("title", "Actualizar");
+  spanReload.setAttribute("class", "btn p-0");
   spanReload.appendChild(reload);
   th.appendChild(spanReload);
   tr.appendChild(th);
@@ -75,7 +80,7 @@ function procesar_imagenes(imagenes) {
 }
 
 //Especificos
-export function InspectImagen() {
+export function searchImagen() {
   let xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
     if (
@@ -83,17 +88,20 @@ export function InspectImagen() {
       xhr.status === HTTP_STATUS_OK
     ) {
       let data = JSON.parse(xhr.responseText);
-      procesar_imagen(data);
+      procesar_ListImagens(data);
     }
   };
   let nameOrId = document.getElementById("searcherImages").value;
-  let url = "http://172.17.0.1:2327/images/" + nameOrId + "/json";
+  let url = "http://172.17.0.1:2327/images/search?term=" + nameOrId;
   xhr.open("GET", url);
+
   xhr.send();
 }
 
-function procesar_imagen(imagen) {
+function procesar_ListImagens(imagenes) {
   document.getElementById("result").innerHTML = "";
+  document.getElementById("creatorContainer").style.display = "none";
+  document.getElementById("creatorImagen").style.display = "none";
   let table = document.createElement("table");
   table.setAttribute("class", "table table-stripped table-hover");
   let tbody = document.createElement("tbody");
@@ -104,64 +112,62 @@ function procesar_imagen(imagen) {
   th.innerHTML = "Nombre";
   tr.appendChild(th);
   th = document.createElement("th");
-  th.innerHTML = "Id";
+  th.innerHTML = "Estrellas";
   tr.appendChild(th);
   th = document.createElement("th");
-  th.innerHTML = "Interacciones";
+  th.innerHTML = "Ofical";
   tr.appendChild(th);
   th = document.createElement("th");
-  let spanReload = document.createElement("span");
-  let reload = document.createElement("i");
-  reload.setAttribute("class", "fa-solid fa-rotate");
-  spanReload.setAttribute("title", "Actualizar");
-
-  spanReload.appendChild(reload);
-  th.appendChild(spanReload);
+  th.innerHTML = "Automatica";
   tr.appendChild(th);
   thead.appendChild(tr);
-  spanReload.addEventListener("click", showAllImages);
-
-  tr = document.createElement("tr");
-  let td = document.createElement("td");
-  td.innerHTML = imagen.RepoTags[0];
-  tr.appendChild(td);
-  td = document.createElement("td");
-  td.setAttribute("data-toggle", "tooltip");
-  td.setAttribute("data-placement", "top");
-  td.setAttribute("title", imagen.Id);
-  let textId = imagen.Id;
-  textId = textId.substr(textId.length - 13, textId.length);
-  td.innerHTML = textId;
-  tr.appendChild(td);
-  td = document.createElement("td");
-  let spanEliminate = document.createElement("span");
-  let eliminate = document.createElement("i");
-  eliminate.setAttribute("class", "fa-solid fa-trash-arrow-up");
-  eliminate.setAttribute("id", imagen.Id);
-  spanEliminate.appendChild(eliminate);
-  spanEliminate.setAttribute("class", "eliminate");
-  td.appendChild(spanEliminate);
-  tr.appendChild(td);
-  td = document.createElement("td");
-  tr.appendChild(td);
+  for (let imagen of imagenes) {
+    tr = document.createElement("tr");
+    let td = document.createElement("td");
+    td.innerHTML = imagen.name;
+    tr.appendChild(td);
+    td = document.createElement("td");
+    td.innerHTML = imagen.star_count;
+    tr.appendChild(td);
+    td = document.createElement("td");
+    td.innerHTML = imagen.is_official;
+    tr.appendChild(td);
+    td = document.createElement("td");
+    td.innerHTML = imagen.is_automated;
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+  }
   table.appendChild(thead);
-  tbody.appendChild(tr);
-  spanEliminate.addEventListener("click", interact);
   table.appendChild(tbody);
   document.getElementById("result").appendChild(table);
 }
 
 //Crear imagenes
 export function createFormImagen() {
+  document.getElementById("creatorContainer").style.display = "none";
   document.getElementById("creatorImagen").style.display = "inherit";
 }
-export function createImagen() {}
+export function createImagen() {
+  let xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+  xhr.onreadystatechange = function () {
+    if (
+      xhr.readyState === READY_STATE_COMPLETE &&
+      xhr.status === HTTP_STATUS_OK
+    ) {
+      let data = JSON.parse(xhr.responseText);
+      procesar_imagenes(data);
+    }
+  };
+  xhr.open("POST", "http://172.17.0.1:2327/images/create?fromImage=alpine");
+  xhr.send();
+}
 //interact
 export function interact(action) {
   let id = action.target.id;
   let interactType = action.currentTarget.className;
-  console.log(interactType);
-  if (interactType === "eliminateImagen") {
+  if (interactType === "eliminate") {
+    console.log("va bien")
     if (confirm("¿Seguro que quieres borrar esta Imagen?")) {
       deleteImagen(id);
     }
@@ -169,6 +175,7 @@ export function interact(action) {
 }
 //borrar imagen
 function deleteImagen(id) {
+  console.log("eliminado");
   let xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
     if (
@@ -179,10 +186,38 @@ function deleteImagen(id) {
   };
   let url = "http://127.0.0.1:2327/images/" + id;
   xhr.open("Delete", url);
+
   xhr.send();
   showAllImages();
 }
 
+export function InspectSelectFormImagen() {
+  let xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+  xhr.onreadystatechange = function () {
+    if (
+      xhr.readyState === READY_STATE_COMPLETE &&
+      xhr.status === HTTP_STATUS_OK
+    ) {
+      let data = JSON.parse(xhr.responseText);
+      createImagenSelect(data);
+    }
+  };
+  xhr.open("GET", "http://127.0.0.1:2327/images/json");
 
-//Telefono
+  xhr.send();
+}
 
+function createImagenSelect(imagenes) {
+  document.getElementById("inputImagenContainer").innerHTML = "";
+  let select = document.getElementById("inputImagenContainer");
+
+  for (let imagen of imagenes) {
+    let option = document.createElement("option");
+    option.setAttribute("value", imagen.RepoTags[0]);
+    option.setAttribute("text", imagen.RepoTags[0]);
+    option.innerHTML = imagen.RepoTags[0];
+    console.log(imagen.RepoTags[0]);
+    select.appendChild(option);
+  }
+}

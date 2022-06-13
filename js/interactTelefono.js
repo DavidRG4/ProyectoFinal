@@ -1,5 +1,5 @@
 import {showAllContainers,inspecContainer } from "/js/containers.js"
-import {showAllImages,InspectImagen } from "/js/imagenes.js"
+import {showAllImages,searchImagen } from "/js/imagenes.js"
 
 export function imagenPhonechecker() {
   document.getElementById("imagenPhone").checked = true;
