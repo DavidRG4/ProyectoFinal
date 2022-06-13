@@ -9,5 +9,6 @@ export function login() {
       document.getElementById("formLogin").style.display ="none" ;
       document.getElementById("navBarSearcher").style.visibility="visible";
       document.getElementById("creatorButtons").style.visibility="visible";
+      document.getElementById("footerDesign").style.visibility="visible"
     }
   }

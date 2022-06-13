@@ -1,6 +1,5 @@
 let READY_STATE_COMPLETE = 4;
 let HTTP_STATUS_OK = 200;
-import {interact} from "./interacciones"
 
 export function showAllContainers() {
   let xhr = new XMLHttpRequest();
@@ -16,7 +15,7 @@ export function showAllContainers() {
   xhr.open("GET", "http://172.17.0.1:2327/containers/json?all=true");
   xhr.send();
 }
- function procesar_container(containers) {
+function procesar_container(containers) {
   document.getElementById("result").innerHTML = "";
   let table = document.createElement("table");
   table.setAttribute("class", "table table-striped table-hover");
@@ -43,7 +42,8 @@ export function showAllContainers() {
   let spanReload = document.createElement("span");
   let reload = document.createElement("i");
   reload.setAttribute("class", "fa-solid fa-rotate");
-  spanReload.setAttribute("title","Actualizar")
+  spanReload.setAttribute("title", "Actualizar");
+  spanReload.setAttribute("class", "btn p-0");
   spanReload.appendChild(reload);
   th.appendChild(spanReload);
   tr.appendChild(th);
@@ -71,6 +71,7 @@ export function showAllContainers() {
       tr.appendChild(td);
     }
     td = document.createElement("td");
+
     let spanStart = document.createElement("span");
     let start = document.createElement("i");
     start.setAttribute("class", "fa-solid fa-play");
@@ -94,7 +95,8 @@ export function showAllContainers() {
     td.appendChild(spanStop);
     td.appendChild(spanEliminate);
     tr.appendChild(td);
-
+    td = document.createElement("td");
+    tr.appendChild(td);
     tbody.appendChild(tr);
     spanStart.addEventListener("click", interact);
     spanStop.addEventListener("click", interact);
@@ -115,12 +117,12 @@ export function inspecContainer() {
       procesar_contenedor(data);
     }
   };
-  nameOrId = document.getElementById("searcherContainer").value;
-  url = "http://172.17.0.1:2327/containers/" + nameOrId + "/json";
+  let nameOrId = document.getElementById("searcherContainer").value;
+  let url = "http://172.17.0.1:2327/containers/" + nameOrId + "/json";
   xhr.open("GET", url);
   xhr.send();
 }
- function procesar_contenedor(container) {
+function procesar_contenedor(container) {
   document.getElementById("result").innerHTML = "";
   let table = document.createElement("table");
   table.setAttribute("class", "table table-stripped table-hover");
@@ -135,7 +137,7 @@ export function inspecContainer() {
   th.innerHTML = "Imagen";
   tr.appendChild(th);
   th = document.createElement("th");
-  th.innerHTML = "Stado";
+  th.innerHTML = "Estado";
   tr.appendChild(th);
   th = document.createElement("th");
   th.innerHTML = "Puerto";
@@ -147,6 +149,8 @@ export function inspecContainer() {
   let spanReload = document.createElement("span");
   let reload = document.createElement("i");
   reload.setAttribute("class", "fa-solid fa-rotate");
+  spanReload.setAttribute("title", "Actualizar");
+  spanReload.setAttribute("class", "btn p-0");
   spanReload.appendChild(reload);
   th.appendChild(spanReload);
   tr.appendChild(th);
@@ -164,10 +168,19 @@ export function inspecContainer() {
   td.innerHTML = container.State.Status;
   tr.appendChild(td);
   td = document.createElement("td");
-  console.log(container.Config.ExposedPorts)
-  //let puerto = container.Ports
-  //td.innerHTML = "Port: " + puerto;
-  //tr.appendChild(td);
+  console.log(container.Config.ExposedPorts);
+  let puerto;
+  let a = " ";
+  let puertos;
+  for (const x in container.Config.ExposedPorts) {
+    a = a + x + ",";
+    let puertos = a;
+    console.log(a);
+    puerto = "Puertos: " + puertos;
+    console.log(x);
+    td.innerHTML = puerto;
+  }
+  tr.appendChild(td);
   td = document.createElement("td");
   let spanStart = document.createElement("span");
   let start = document.createElement("i");
@@ -186,20 +199,19 @@ export function inspecContainer() {
   eliminate.setAttribute("class", "fa-solid fa-trash-arrow-up");
   eliminate.setAttribute("id", container.Id);
   spanEliminate.appendChild(eliminate);
-  spanEliminate.setAttribute("class", "eliminateContainer");
+  spanEliminate.setAttribute("class", "eliminate");
 
   td.appendChild(spanStart);
   td.appendChild(spanStop);
   td.appendChild(spanEliminate);
   tr.appendChild(td);
   td = document.createElement("td");
-  tr.appendChild(td)
+  tr.appendChild(td);
   tbody.appendChild(tr);
   spanStart.addEventListener("click", interact);
   spanStop.addEventListener("click", interact);
   spanEliminate.addEventListener("click", interact);
   tr.appendChild(td);
-
   tbody.appendChild(tr);
   table.appendChild(thead);
   table.appendChild(tbody);
@@ -208,22 +220,22 @@ export function inspecContainer() {
 
 //Crear Contenedor
 export function createFormContainer() {
-  document.getElementById("creatorContainer").style.display="inline-block	";
+  document.getElementById("creatorContainer").style.display = "inherit";
 }
-export function createContainer(){
-
-}
+export function createContainer() {}
 //
 function interact(action) {
-  id = action.target.id;
-  interactType = action.currentTarget.className;
+  let id = action.target.id;
+  let interactType = action.currentTarget.className;
   console.log(interactType);
   if (interactType === "start") {
     startContainer(id);
   } else if (interactType === "stop") {
     stopContainer(id);
-  } else if (interactType === "eliminateContainer") {
-    deleteContainer(id);
+  } else if (interactType === "eliminate") {
+    if (confirm("¿Seguro que quieres borrar este Contenedor?")) {
+      deleteContainer(id);
+    }
   }
 }
 //Eliminar containers
@@ -236,7 +248,7 @@ function deleteContainer(id) {
     ) {
     }
   };
-  url = "http://127.0.0.1:2327/containers/" + id;
+  let url = "http://127.0.0.1:2327/containers/" + id;
   xhr.open("Delete", url);
   xhr.send();
   showAllContainers();
@@ -252,7 +264,7 @@ function startContainer(id) {
     ) {
     }
   };
-  url = "http://127.0.0.1:2327/containers/" + id + "/start";
+  let url = "http://127.0.0.1:2327/containers/" + id + "/start";
   xhr.open("Post", url);
   xhr.send();
 
@@ -270,7 +282,7 @@ function stopContainer(id) {
     ) {
     }
   };
-  url = "http://127.0.0.1:2327/containers/" + id + "/stop";
+  let url = "http://127.0.0.1:2327/containers/" + id + "/stop";
   xhr.open("Post", url);
   xhr.send();
   showAllContainers();

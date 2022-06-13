@@ -1,6 +1,5 @@
 let READY_STATE_COMPLETE = 4;
 let HTTP_STATUS_OK = 200;
-import { interact } from "./interacciones";
 
 export function showAllImages() {
   let xhr = new XMLHttpRequest();
@@ -62,7 +61,7 @@ function procesar_imagenes(imagenes) {
     eliminate.setAttribute("class", "fa-solid fa-trash-arrow-up");
     eliminate.setAttribute("id", imagen.Id);
     spanEliminate.appendChild(eliminate);
-    spanEliminate.setAttribute("class", "eliminateImagen");
+    spanEliminate.setAttribute("class", "eliminate");
     spanEliminate.addEventListener("click", interact);
     td.appendChild(spanEliminate);
     tr.appendChild(td);
@@ -87,8 +86,8 @@ export function InspectImagen() {
       procesar_imagen(data);
     }
   };
-  nameOrId = document.getElementById("searcherImages").value;
-  url = "http://172.17.0.1:2327/images/" + nameOrId + "/json";
+  let nameOrId = document.getElementById("searcherImages").value;
+  let url = "http://172.17.0.1:2327/images/" + nameOrId + "/json";
   xhr.open("GET", url);
   xhr.send();
 }
@@ -127,7 +126,12 @@ function procesar_imagen(imagen) {
   td.innerHTML = imagen.RepoTags[0];
   tr.appendChild(td);
   td = document.createElement("td");
-  td.innerHTML = imagen.Id;
+  td.setAttribute("data-toggle", "tooltip");
+  td.setAttribute("data-placement", "top");
+  td.setAttribute("title", imagen.Id);
+  let textId = imagen.Id;
+  textId = textId.substr(textId.length - 13, textId.length);
+  td.innerHTML = textId;
   tr.appendChild(td);
   td = document.createElement("td");
   let spanEliminate = document.createElement("span");
@@ -138,6 +142,8 @@ function procesar_imagen(imagen) {
   spanEliminate.setAttribute("class", "eliminate");
   td.appendChild(spanEliminate);
   tr.appendChild(td);
+  td = document.createElement("td");
+  tr.appendChild(td);
   table.appendChild(thead);
   tbody.appendChild(tr);
   spanEliminate.addEventListener("click", interact);
@@ -146,19 +152,19 @@ function procesar_imagen(imagen) {
 }
 
 //Crear imagenes
-export function createFormImagen(){
-  document.getElementById("creatorImagen").style.display="inline-block	";
+export function createFormImagen() {
+  document.getElementById("creatorImagen").style.display = "inherit";
 }
-export function createImagen(){
-
-}
+export function createImagen() {}
 //interact
 export function interact(action) {
-  id = action.target.id;
-  interactType = action.currentTarget.className;
+  let id = action.target.id;
+  let interactType = action.currentTarget.className;
   console.log(interactType);
   if (interactType === "eliminateImagen") {
-    startContainer(id);
+    if (confirm("¿Seguro que quieres borrar esta Imagen?")) {
+      deleteImagen(id);
+    }
   }
 }
 //borrar imagen
@@ -171,8 +177,12 @@ function deleteImagen(id) {
     ) {
     }
   };
-  url = "http://127.0.0.1:2327/images/" + id;
+  let url = "http://127.0.0.1:2327/images/" + id;
   xhr.open("Delete", url);
   xhr.send();
   showAllImages();
 }
+
+
+//Telefono
+

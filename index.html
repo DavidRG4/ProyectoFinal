@@ -16,7 +16,7 @@
     <script defer src="js/imagenes.js" type="module"></script>
     <script defer src="js/login.js" type="module"></script>
     <script defer src="js/main.js" type="module"></script>
-
+    <script defer src="js/interactTelefono.js" type="module"></script>
     <link rel="stylesheet" href="css/main.css" />
 
     <title>ProyectoFinal</title>
@@ -47,7 +47,6 @@
                     <a class="btn col-12 text-primary" id="showAllImagenContainer">Mostrar Todos</a>
                 </form>
             </div>
-            <!--    dadwadadadad-->
         </nav>
         <nav id="navBarSearcher" class="navbar navbar-light bg-light justify-content-between">
             <div class="d-inline-flex">
@@ -93,8 +92,9 @@
                     <label for="password">Contraseña</label>
                     <input type="password" class="form-control" id="passwordLogin" placeholder="Contraseña">
                 </div>
-                <button class="btn btn-primary col-8 m-3" id="startSession">Inciar Sesion</button>
+
             </form>
+            <button class="btn btn-primary col-8 m-3" id="startSession">Inciar Sesion</button>
         </div>
         <div class="container container-fluid-sm text-center" id="creatorContainer">
             <form class="row justify-content-center text-left">
@@ -129,7 +129,7 @@
             <div class="table-responsive mt-3" id="result"></div>
         </div>
         <div id="creatorButtons" class="d-flex justify-content-center mt-3">
-            <button class="btn btn-primary btn-md mx-2" id="addImagen"> Añadir nueva Iamgen </button>
+            <button class="btn btn-primary btn-md mx-2" id="addImagen"> Añadir nueva Imagen </button>
             <button class="btn btn-primary btn-md mx-2" id="addContainer"> Añadir nuevo Container </button>
         </div>
     </main>

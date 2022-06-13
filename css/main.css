@@ -1,4 +1,11 @@
 /* Login*/
+.start,.stop,.eliminate{
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+
 #formLogin {
   border-radius: 10px 10px 10px 10px;
   background: #fff;
@@ -54,6 +61,12 @@
   color: #dddddd;
 }
 
+/*Estilos*/
+body{
+  min-height: 100vh;
+  position: relative;
+}
+
 #navBarSearcher {
   visibility: hidden;
 }
@@ -61,8 +74,11 @@
   visibility: hidden;
 }
 #lupa{display:none}
-footer {
+#footerDesign {
   visibility: hidden;
+  position: absolute;
+  width:99%;
+  bottom:0;
 }
 #creatorContainer{
   display:none;
@@ -103,4 +119,9 @@ footer {
   #DockerLogo{
     width: 60%;
   }
+  .start,.stop,.eliminate{
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  
 }
