@@ -30,22 +30,23 @@
             </figure>
         </div>
         <nav id="navBarSearcherPhone" class="navbar navbar-light bg-light ">
-            <div class="container-fluid p-2 mt-3" id="navBarSearcherPhoneForm">
-                <form class="row justify-content-center">
-                    <div class="btn-group btn-group-toggle p-2" data-toggle="buttons">
-                        <label class="btn btn-primary  btn-outline-primary btn-sm">
+            <div class="container-fluid p-2 mt-3 justify-content-center text-center" id="navBarSearcherPhoneForm">
+                <form class="row justify-content-center ">
+                    <div class="btn-group btn-group-toggle p-2 " data-toggle="buttons">
+                        <label class="btn btn-primary  btn-outline-primary btn-sm active"  id="imagenPhoneBtn">
                             <input type="radio" name="options" id="imagenPhone" checked> Imagenes
                         </label>
-                        <label class="btn  btn-outline-primary btn-primary btn-sm">
+                        <label class="btn  btn-outline-primary btn-primary btn-sm" id="containerPhoneBtn">
                             <input type="radio" name="options" id="containerPhone"> Contenedores
                         </label>
                     </div>
-                    <div class="col-9">
+                    <div class="col-10">
                         <input type="text" class="form-control" id="searcherImagenContainer" placeholder="Nombre o ID">
                     </div>
-                    <button class="btn btn-primary col-8 m-2" id="searchImagenContainer">Buscar</button>
-                    <a class="btn col-12 text-primary" id="showAllImagenContainer">Mostrar Todos</a>
                 </form>
+                <button class="btn btn-primary col-8 m-2" id="searchImagenContainer">Buscar</button>
+                <a class="btn col-12 text-primary" id="showAllImagenContainer">Mostrar Todos</a>
+
             </div>
         </nav>
         <nav id="navBarSearcher" class="navbar navbar-light bg-light justify-content-between">
@@ -94,6 +95,7 @@
                 </div>
 
             </form>
+            <button class="btn btn-primary col-8 m-3" id="startSessionPhone">Inciar Sesion</button>
             <button class="btn btn-primary col-8 m-3" id="startSession">Inciar Sesion</button>
         </div>
         <div class="container container-fluid-sm text-center" id="creatorContainer">
@@ -113,10 +115,10 @@
                 </div>
                 <div class="form-group m-2">
                     <label for="puertoContainer">ENV</label>
-                    <input type="text" class="form-control" id="inputPuertoContainer" placeholder="VAR1=value1,VAR2=value2, ...">
+                    <input type="text" class="form-control" id="inputVarContainer" placeholder="VAR1=value1,VAR2=value2, ...">
                 </div>
             </form>
-            <button id="confirmCreateContainer" class="btn btn-primary col-3 m-3">Crear Contenedor</button>
+            <button id="confirmCreateContainer" class="btn btn-primary col-3 m-3 col-sm-5">Crear Contenedor</button>
 
         </div>
         <div class="container container-fluid-sm text-center" id="creatorImagen">
@@ -134,10 +136,10 @@
 
         </div>
         <div id="creatorButtons" class="d-flex justify-content-center mt-3">
-            <button class="btn btn-primary btn-md mx-2" id="addImagen"> Añadir nueva Imagen </button>
-            <button class="btn btn-primary btn-md mx-2" id="addContainer"> Añadir nuevo Container </button>
+            <button class="btn btn-primary btn-md mx-2 " id="addImagen"> Añadir nueva Imagen </button>
+            <button class="btn btn-primary btn-md mx-2 " id="addContainer"> Añadir nuevo Container </button>
         </div>
-        <div class="container">
+        <div class="container px-sm-1">
             <div class="table-responsive mt-3" id="result"></div>
         </div>
   

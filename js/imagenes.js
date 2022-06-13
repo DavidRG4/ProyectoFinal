@@ -97,7 +97,23 @@ export function searchImagen() {
 
   xhr.send();
 }
+export function searchImagenPhone() {
+  let xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (
+      xhr.readyState === READY_STATE_COMPLETE &&
+      xhr.status === HTTP_STATUS_OK
+    ) {
+      let data = JSON.parse(xhr.responseText);
+      procesar_ListImagens(data);
+    }
+  };
+  let nameOrId = document.getElementById("searcherImagenContainer").value;
+  let url = "http://172.17.0.1:2327/images/search?term=" + nameOrId;
+  xhr.open("GET", url);
 
+  xhr.send();
+}
 function procesar_ListImagens(imagenes) {
   document.getElementById("result").innerHTML = "";
   document.getElementById("creatorContainer").style.display = "none";
@@ -159,15 +175,28 @@ export function createImagen() {
       procesar_imagenes(data);
     }
   };
-  xhr.open("POST", "http://172.17.0.1:2327/images/create?fromImage=alpine");
+  let imagenName = document.getElementById("inputImagenName").value;
+  let version = document.getElementById("inputImagenTag").value;
+  if (version === "") {
+    version = "latest";
+  }
+  xhr.open(
+    "POST",
+    "http://172.17.0.1:2327/images/create?fromImage=" +
+      imagenName +
+      "&tag=" +
+      version
+  );
   xhr.send();
+  document.getElementById("result").innerHTML = "";
+  showAllImages();
 }
 //interact
 export function interact(action) {
   let id = action.target.id;
   let interactType = action.currentTarget.className;
   if (interactType === "eliminate") {
-    console.log("va bien")
+    console.log("va bien");
     if (confirm("¿Seguro que quieres borrar esta Imagen?")) {
       deleteImagen(id);
     }
@@ -217,7 +246,6 @@ function createImagenSelect(imagenes) {
     option.setAttribute("value", imagen.RepoTags[0]);
     option.setAttribute("text", imagen.RepoTags[0]);
     option.innerHTML = imagen.RepoTags[0];
-    console.log(imagen.RepoTags[0]);
     select.appendChild(option);
   }
 }

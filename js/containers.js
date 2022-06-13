@@ -1,4 +1,4 @@
-import {InspectSelectFormImagen} from "./imagenes.js"
+import { InspectSelectFormImagen } from "./imagenes.js";
 
 let READY_STATE_COMPLETE = 4;
 let HTTP_STATUS_OK = 200;
@@ -15,7 +15,7 @@ export function showAllContainers() {
     }
   };
   xhr.open("GET", "http://172.17.0.1:2327/containers/json?all=true");
- 
+
   xhr.send();
 }
 function procesar_container(containers) {
@@ -125,9 +125,27 @@ export function inspecContainer() {
   let nameOrId = document.getElementById("searcherContainer").value;
   let url = "http://172.17.0.1:2327/containers/" + nameOrId + "/json";
   xhr.open("GET", url);
- 
+
   xhr.send();
 }
+export function inspecContainerPhone() {
+  let xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (
+      xhr.readyState === READY_STATE_COMPLETE &&
+      xhr.status === HTTP_STATUS_OK
+    ) {
+      let data = JSON.parse(xhr.responseText);
+      procesar_contenedor(data);
+    }
+  };
+  let nameOrId = document.getElementById("searcherImagenContainer").value;
+  let url = "http://172.17.0.1:2327/containers/" + nameOrId + "/json";
+  xhr.open("GET", url);
+
+  xhr.send();
+}
+
 function procesar_contenedor(container) {
   document.getElementById("result").innerHTML = "";
   document.getElementById("creatorContainer").style.display = "none";
@@ -231,9 +249,45 @@ export function createFormContainer() {
   InspectSelectFormImagen();
   document.getElementById("creatorContainer").style.display = "inherit";
   document.getElementById("creatorImagen").style.display = "none";
-
 }
-export function createContainer() {}
+export function createContainer() {
+  let Json = createJSON();
+  console.log(Json)
+  let xhr = new XMLHttpRequest();
+  let url = "http://172.17.0.1:2327/containers/create";
+  xhr.open("POST", url);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.send(JSON.stringify(Json));
+}
+function createJSON() {
+  let nombre = document.getElementById("inputContainerName").value;
+  let variablesEntornoString =
+    document.getElementById("inputVarContainer").value;
+  let puertosString = document.getElementById("inputPuertoContainer").value;
+  let imagen = document.getElementById("inputImagenContainer").value;
+  let variablesEntornoArray = variablesEntornoString.split(",");
+  let puertosArray = puertosString.split(",");
+  console.log(nombre);
+  console.log(variablesEntornoString);
+  console.log(variablesEntornoArray);
+  console.log(puertosString);
+  console.log(puertosArray);
+  console.log(imagen);
+  let ports = new Map();
+  for (let i = 0; i < puertosArray.length; i++) {
+    let emptyObject = new Object();
+    ports.set(puertosArray[i], emptyObject);
+  }
+  console.log(ports);
+  let Json = {
+    ExposedPorts: ports,
+    Env: variablesEntornoArray,
+    Image: imagen,
+  };
+  console.log(Json);
+  return Json;
+}
+
 //
 function interact(action) {
   let id = action.target.id;
@@ -261,7 +315,7 @@ function deleteContainer(id) {
   };
   let url = "http://127.0.0.1:2327/containers/" + id;
   xhr.open("Delete", url);
- 
+
   xhr.send();
   showAllContainers();
 }
@@ -278,7 +332,7 @@ function startContainer(id) {
   };
   let url = "http://127.0.0.1:2327/containers/" + id + "/start";
   xhr.open("Post", url);
- 
+
   xhr.send();
   showAllContainers();
 }
@@ -296,7 +350,7 @@ function stopContainer(id) {
   };
   let url = "http://127.0.0.1:2327/containers/" + id + "/stop";
   xhr.open("Post", url);
- 
+
   xhr.send();
   showAllContainers();
 }
