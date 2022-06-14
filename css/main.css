@@ -61,6 +61,11 @@
   color: #dddddd;
 }
 
+  #startSessionPhone{
+  display: none;
+}
+
+
 /*Estilos*/
 body{
   min-height: 100vh;
@@ -94,22 +99,20 @@ body{
 }
 /*tablet*/
 @media screen and (max-width: 995px) {
-  body {
-    background-color: red;
-  }
   #lupa{
     display: inline-block;
   }
   #searchImagen{
     display:none
   }
+  #searchContainer{
+    display: none;
+  }
   
 }
 /*movil*/
 @media screen and (max-width: 576px) {
-  body {
-    background-color: rgb(0, 255, 55);
-  }
+
   #navBarSearcherPhone{
     display: none;
   }
@@ -125,5 +128,8 @@ body{
   }
   #startSession{
     display: none;
+  }
+    #startSessionPhone{
+    display: inline-block;
   }
 }

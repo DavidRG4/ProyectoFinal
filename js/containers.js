@@ -14,7 +14,9 @@ export function showAllContainers() {
       procesar_container(data);
     }
   };
+  xhr.withCredentials = true;
   xhr.open("GET", "http://172.17.0.1:2327/containers/json?all=true");
+  xhr.setRequestHeader("Access-Control-Allow-Origin","*")
 
   xhr.send();
 }
@@ -72,7 +74,7 @@ function procesar_container(containers) {
       td.innerHTML = "Port: " + puerto;
       tr.appendChild(td);
     } else {
-      td.innerHTML = "Port: 8080";
+      td.innerHTML = "Port: none";
       tr.appendChild(td);
     }
     td = document.createElement("td");
@@ -252,7 +254,7 @@ export function createFormContainer() {
 }
 export function createContainer() {
   let Json = createJSON();
-  console.log(Json)
+  console.log(Json);
   let xhr = new XMLHttpRequest();
   let url = "http://172.17.0.1:2327/containers/create";
   xhr.open("POST", url);
