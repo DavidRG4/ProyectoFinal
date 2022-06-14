@@ -15,7 +15,7 @@ export function showAllContainers() {
     }
   };
   xhr.withCredentials = true;
-  xhr.open("GET", "http://172.17.0.1:2327/containers/json?all=true");
+  xhr.open("GET", "http://127.0.0.1:2327/containers/json?all=true");
   xhr.setRequestHeader("Access-Control-Allow-Origin","*")
 
   xhr.send();
@@ -37,7 +37,7 @@ function procesar_container(containers) {
   th.innerHTML = "Imagen";
   tr.appendChild(th);
   th = document.createElement("th");
-  th.innerHTML = "Stado";
+  th.innerHTML = "Estado";
   tr.appendChild(th);
   th = document.createElement("th");
   th.innerHTML = "Puerto";
@@ -125,7 +125,7 @@ export function inspecContainer() {
     }
   };
   let nameOrId = document.getElementById("searcherContainer").value;
-  let url = "http://172.17.0.1:2327/containers/" + nameOrId + "/json";
+  let url = "http://127.0.0.1:2327/containers/" + nameOrId + "/json";
   xhr.open("GET", url);
 
   xhr.send();
@@ -142,7 +142,7 @@ export function inspecContainerPhone() {
     }
   };
   let nameOrId = document.getElementById("searcherImagenContainer").value;
-  let url = "http://172.17.0.1:2327/containers/" + nameOrId + "/json";
+  let url = "http://127.0.0.1:2327/containers/" + nameOrId + "/json";
   xhr.open("GET", url);
 
   xhr.send();
@@ -256,7 +256,7 @@ export function createContainer() {
   let Json = createJSON();
   console.log(Json);
   let xhr = new XMLHttpRequest();
-  let url = "http://172.17.0.1:2327/containers/create";
+  let url = "http://127.0.0.1:2327/containers/create";
   xhr.open("POST", url);
   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xhr.send(JSON.stringify(Json));
@@ -300,7 +300,7 @@ function interact(action) {
   } else if (interactType === "stop") {
     stopContainer(id);
   } else if (interactType === "eliminate") {
-    if (confirm("¿Seguro que quieres borrar este Contenedor?")) {
+    if (confirm("¿Seguro que quieres borrar este Contenedor aun que pueda estar en funcionamiento?")) {
       deleteContainer(id);
     }
   }
@@ -315,7 +315,7 @@ function deleteContainer(id) {
     ) {
     }
   };
-  let url = "http://127.0.0.1:2327/containers/" + id;
+  let url = "http://127.0.0.1:2327/containers/" + id+"?force=true";
   xhr.open("Delete", url);
 
   xhr.send();

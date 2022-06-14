@@ -1,5 +1,5 @@
 import {showAllContainers} from "./containers.js"
-//Login
+//Login normal
 export function login() {
     let user = document.getElementById("usernameLogin").value;
     let password = document.getElementById("passwordLogin").value;
@@ -9,9 +9,13 @@ export function login() {
       document.getElementById("formLogin").style.display ="none" ;
       document.getElementById("navBarSearcher").style.visibility="visible";
       document.getElementById("creatorButtons").style.visibility="visible";
-//      document.getElementById("footerDesign").style.visibility="visible"
+      document.getElementById("navBarSearcherPhone").style.visibility = "visible"
+
     }
   }
+
+//login Telefono
+
   export function loginPhone() {
     let user = document.getElementById("usernameLogin").value;
     let password = document.getElementById("passwordLogin").value;
@@ -19,7 +23,8 @@ export function login() {
       console.log("todo bien")
       showAllContainers();
       document.getElementById("formLogin").style.display ="none" ;
-      document.getElementById("navBarSearcherPhone").style.display="inherit";
       document.getElementById("creatorButtons").style.visibility="visible";
+      document.getElementById("navBarSearcherPhone").style.visibility = "visible"
+
     }
   }

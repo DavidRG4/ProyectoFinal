@@ -101,7 +101,7 @@
         <div class="container container-fluid-sm text-center" id="creatorContainer">
             <form class="row justify-content-center text-left">
                 <div class="form-group m-2">
-                    <label for="containerName">Nombre container</label>
+                    <label for="containerName">Nombre Contenedor</label>
                     <input type="text" class="form-control" id="inputContainerName" aria-describedby="emailHelp"
                         placeholder="Introduzca">
                 </div>
@@ -113,8 +113,8 @@
                     <label for="ImagenContainer">Imagen</label>
                     <select class="form-control" id="inputImagenContainer"></select>
                 </div>
-                <div class="form-group m-2">
-                    <label for="puertoContainer">ENV</label>
+                <div class="form-group m-2 col-lg-5">
+                    <label for="puertoContainer">Variables Entorno</label>
                     <input type="text" class="form-control" id="inputVarContainer" placeholder="VAR1=value1,VAR2=value2, ...">
                 </div>
             </form>
@@ -137,19 +137,13 @@
         </div>
         <div id="creatorButtons" class="d-flex justify-content-center mt-3">
             <button class="btn btn-primary btn-md mx-2 " id="addImagen"> Añadir nueva Imagen </button>
-            <button class="btn btn-primary btn-md mx-2 " id="addContainer"> Añadir nuevo Container </button>
+            <button class="btn btn-primary btn-md mx-2 " id="addContainer"> Añadir nuevo Contenedor </button>
         </div>
         <div class="container px-sm-1">
             <div class="table-responsive mt-3" id="result"></div>
         </div>
   
     </main>
-  <!--  <footer class="bg-primary mt-5 mx-2 d-flex justify-content-center text-white" id="footerDesign">
-        <p class="figure align-self-center m-2">hola</p>
-    </footer> -->
 </body>
 
 </html>
-<!--
-docker run -d -it -p 8181 -v $(pwd):/usr/local/apache2/htdocs/ httpd:2.4
-https://developer.mozilla.org/es/docs/Web/API/Event/target-->

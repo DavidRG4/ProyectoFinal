@@ -1,6 +1,7 @@
 let READY_STATE_COMPLETE = 4;
 let HTTP_STATUS_OK = 200;
 
+//Generales
 export function showAllImages() {
   let xhr = new XMLHttpRequest();
   xhr.withCredentials = true;
@@ -92,7 +93,7 @@ export function searchImagen() {
     }
   };
   let nameOrId = document.getElementById("searcherImages").value;
-  let url = "http://172.17.0.1:2327/images/search?term=" + nameOrId;
+  let url = "http://127.0.0.1:2327/images/search?term=" + nameOrId;
   xhr.open("GET", url);
 
   xhr.send();
@@ -109,7 +110,7 @@ export function searchImagenPhone() {
     }
   };
   let nameOrId = document.getElementById("searcherImagenContainer").value;
-  let url = "http://172.17.0.1:2327/images/search?term=" + nameOrId;
+  let url = "http://127.0.0.1:2327/images/search?term=" + nameOrId;
   xhr.open("GET", url);
 
   xhr.send();
@@ -182,7 +183,7 @@ export function createImagen() {
   }
   xhr.open(
     "POST",
-    "http://172.17.0.1:2327/images/create?fromImage=" +
+    "http://127.0.0.1:2327/images/create?fromImage=" +
       imagenName +
       "&tag=" +
       version
@@ -213,13 +214,14 @@ function deleteImagen(id) {
     ) {
     }
   };
-  let url = "http://127.0.0.1:2327/images/" + id;
+  let url = "http://127.0.0.1:2327/images/"+id+"?force=true";
   xhr.open("Delete", url);
 
   xhr.send();
   showAllImages();
 }
 
+//Crear Select Imagenes
 export function InspectSelectFormImagen() {
   let xhr = new XMLHttpRequest();
   xhr.withCredentials = true;
