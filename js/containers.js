@@ -356,9 +356,12 @@ export function createFormContainer() {
 }
 export function createContainer() {
   let Json = createJSON();
+
+  let nombre = document.getElementById("inputContainerName").value;
   console.log(Json);
+  console.log(nombre);
   let xhr = new XMLHttpRequest();
-  let url = "http://127.0.0.1:2327/containers/create";
+  let url = "http://127.0.0.1:2327/containers/create?name=" + nombre;
   xhr.open("POST", url);
   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   document.getElementById("resultText").innerHTML =
@@ -367,29 +370,45 @@ export function createContainer() {
   xhr.send(JSON.stringify(Json));
 }
 function createJSON() {
-  let nombre = document.getElementById("inputContainerName").value;
   let variablesEntornoString =
     document.getElementById("inputVarContainer").value;
   let puertosString = document.getElementById("inputPuertoContainer").value;
   let imagen = document.getElementById("inputImagenContainer").value;
   let variablesEntornoArray = variablesEntornoString.split(",");
   let puertosArray = puertosString.split(",");
-  console.log(nombre);
   console.log(variablesEntornoString);
   console.log(variablesEntornoArray);
   console.log(puertosString);
   console.log(puertosArray);
   console.log(imagen);
   let ports = new Map();
+  let Hostconfig = new Map();
+  let PortBindings = new Map();
   for (let i = 0; i < puertosArray.length; i++) {
-    let emptyObject = new Object();
-    ports.set(puertosArray[i], emptyObject);
+    PortBindings.clear();
+    let Empty = new Object();
+    let PortBindingsArray = [];
+    let portelements = puertosArray[i].split(":");
+    let HostPorts = new Map();
+    let HostIp = new Map();
+    HostPorts.set("HostPort", portelements[1]);
+    HostIp.set("HostIp", "");
+
+    PortBindingsArray.push(HostPorts);
+    PortBindingsArray.push(HostIp);
+    ports.set(portelements[0], Empty);
+    PortBindings.set(portelements[0], PortBindingsArray);
+    Hostconfig.set("PortBindings", PortBindings);
   }
   console.log(ports);
+  console.log("PortBindings");
+  console.log(PortBindings);
+  console.log(Hostconfig);
   let Json = {
     ExposedPorts: ports,
     Env: variablesEntornoArray,
     Image: imagen,
+    HostConfig: Hostconfig,
   };
   console.log(Json);
   return Json;
