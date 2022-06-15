@@ -20,6 +20,7 @@ export function showAllImages() {
 }
 function procesar_imagenes(imagenes) {
   document.getElementById("result").innerHTML = "";
+  document.getElementById("resultText").innerHTML = "Mostrando todas las imagenes descargadas"
   document.getElementById("creatorContainer").style.display = "none";
   document.getElementById("creatorImagen").style.display = "none";
   let table = document.createElement("table");
@@ -83,16 +84,16 @@ function procesar_imagenes(imagenes) {
 //Especificos
 export function searchImagen() {
   let xhr = new XMLHttpRequest();
+  let nameOrId = document.getElementById("searcherImages").value;
   xhr.onreadystatechange = function () {
     if (
       xhr.readyState === READY_STATE_COMPLETE &&
       xhr.status === HTTP_STATUS_OK
     ) {
       let data = JSON.parse(xhr.responseText);
-      procesar_ListImagens(data);
+      procesarListImagens(data,nameOrId);
     }
   };
-  let nameOrId = document.getElementById("searcherImages").value;
   let url = "http://127.0.0.1:2327/images/search?term=" + nameOrId;
   xhr.open("GET", url);
 
@@ -100,23 +101,26 @@ export function searchImagen() {
 }
 export function searchImagenPhone() {
   let xhr = new XMLHttpRequest();
+  let nameOrId = document.getElementById("searcherImagenContainer").value;
   xhr.onreadystatechange = function () {
     if (
       xhr.readyState === READY_STATE_COMPLETE &&
       xhr.status === HTTP_STATUS_OK
     ) {
+      console
       let data = JSON.parse(xhr.responseText);
-      procesar_ListImagens(data);
+      procesarListImagens(data,nameOrId);
     }
   };
-  let nameOrId = document.getElementById("searcherImagenContainer").value;
   let url = "http://127.0.0.1:2327/images/search?term=" + nameOrId;
   xhr.open("GET", url);
 
   xhr.send();
 }
-function procesar_ListImagens(imagenes) {
+function procesarListImagens(imagenes,nameOrId) {
   document.getElementById("result").innerHTML = "";
+  document.getElementById("resultText").innerHTML = "Mostrando todas las imagenes relacionadas con: "+nameOrId
+
   document.getElementById("creatorContainer").style.display = "none";
   document.getElementById("creatorImagen").style.display = "none";
   let table = document.createElement("table");
@@ -189,6 +193,7 @@ export function createImagen() {
       version
   );
   xhr.send();
+  document.getElementById("resultText").innerHTML = "Se ha descargado correctamente la imagen, si no se muestra todavia reacarge las imagenes"
   document.getElementById("result").innerHTML = "";
   showAllImages();
 }
@@ -216,7 +221,7 @@ function deleteImagen(id) {
   };
   let url = "http://127.0.0.1:2327/images/"+id+"?force=true";
   xhr.open("Delete", url);
-
+  document.getElementById("resultText").innerHTML = "Se ha eliminado correctamente la imagen, si no se ha eliminado todavia reacarge las imagenes"
   xhr.send();
   showAllImages();
 }
